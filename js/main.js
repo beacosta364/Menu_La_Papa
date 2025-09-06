@@ -91,40 +91,27 @@ const AUTO_INTERVAL = 3000; // ms
 
 // Calcula tamaños y variables dependientes del layout
 function updateSizes() {
-  // Re-ligar lista de cards por si el cliente añade nuevas
   cards = Array.from(track.querySelectorAll('.card'));
   if (cards.length === 0) return;
 
-  // ancho de la primera tarjeta
   const cardRect = cards[0].getBoundingClientRect();
   const cardWidth = cardRect.width;
 
-  // obtener gap CSS (fallback 0)
   const style = window.getComputedStyle(track);
   const gap = parseFloat(style.gap || style.columnGap || '0') || 0;
 
   slideDistance = Math.round(cardWidth + gap);
-
-  // cuantas tarjetas caben en el contenedor entero
   visibleCount = Math.max(1, Math.floor(container.clientWidth / slideDistance));
   maxIndex = Math.max(0, cards.length - visibleCount);
 
-  // ajustar índice si quedó fuera de rango
   if (index > maxIndex) index = 0;
-
-  // aplicar posición actual sin animación extra
   goToIndex(index, false);
 }
 
 // Mover a un índice (con/sin animación)
 function goToIndex(i, animate = true) {
-  // limitar i entre 0 y maxIndex
   index = Math.max(0, Math.min(i, maxIndex));
-  if (animate) {
-    track.style.transition = 'transform 0.5s ease';
-  } else {
-    track.style.transition = 'none';
-  }
+  track.style.transition = animate ? 'transform 0.5s ease' : 'none';
   const x = -(index * slideDistance);
   track.style.transform = `translateX(${x}px)`;
 }
@@ -152,13 +139,11 @@ function stopAutoScroll() {
 // Drag / Swipe (mouse + touch)
 let isDragging = false;
 let startX = 0;
-let currentTranslate = 0;
 
 function pointerDown(e) {
   stopAutoScroll();
   isDragging = true;
   startX = (e.touches ? e.touches[0].clientX : e.clientX);
-  // quitar transición para arrastrar suave
   track.style.transition = 'none';
 }
 function pointerMove(e) {
@@ -174,7 +159,6 @@ function pointerUp(e) {
   const endX = (e.changedTouches ? e.changedTouches[0].clientX : e.clientX);
   const dx = endX - startX;
 
-  // Umbral de swipe (50px)
   if (dx > 50 && index > 0) {
     goToIndex(index - 1, true);
   } else if (dx < -50 && index < maxIndex) {
@@ -190,27 +174,34 @@ function pointerUp(e) {
 function setupCardClicks() {
   cards.forEach(card => {
     card.addEventListener('click', (e) => {
-      // si se estaba arrastrando, ignorar click accidental
       if (isDragging) return;
 
-      // toggle: si ya estaba activa, la desactivamos; si no, activamos esta y desactivamos otras
       const already = card.classList.contains('active');
       cards.forEach(c => c.classList.remove('active'));
-      if (!already) card.classList.add('active');
+
+      if (!already) {
+        card.classList.add('active');
+        stopAutoScroll();   // 🚨 detener carrusel si hay card activa
+      } else {
+        startAutoScroll();  // 🚨 reanudar carrusel si se desactiva
+      }
     });
   });
 
-  // click fuera de cualquier tarjeta cierra la descripción activa
+  // click fuera de cualquier tarjeta → cerrar y reanudar
   document.addEventListener('click', (e) => {
     if (!track.contains(e.target)) {
+      let hadActive = cards.some(c => c.classList.contains('active'));
       cards.forEach(c => c.classList.remove('active'));
+      if (hadActive) {
+        startAutoScroll();  // 🚨 reanudar cuando se cierre
+      }
     }
   });
 }
 
 // Inicialización
 function initCarousel() {
-  // listeners pointer (soporta touch y mouse)
   track.addEventListener('mousedown', pointerDown);
   track.addEventListener('touchstart', pointerDown, {passive:true});
 
@@ -220,12 +211,9 @@ function initCarousel() {
   window.addEventListener('mouseup', pointerUp);
   window.addEventListener('touchend', pointerUp);
 
-  // recalcular en resize / load / orientationchange
-  window.addEventListener('resize', () => {
-    updateSizes();
-  });
-  window.addEventListener('orientationchange', () => updateSizes());
-  window.addEventListener('load', () => updateSizes());
+  window.addEventListener('resize', updateSizes);
+  window.addEventListener('orientationchange', updateSizes);
+  window.addEventListener('load', updateSizes);
 
   setupCardClicks();
   updateSizes();
