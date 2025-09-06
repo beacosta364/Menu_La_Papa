@@ -159,19 +159,28 @@
     </section>
 
     <!-- SECCIÓN RESERVA -->
-    <section id="reservation" class="section">
-        <div class="container">
-        <h2>Reserva tu mesa</h2>
-        <form class="reservation-form">
-            <input type="text" placeholder="Nombre" required>
-            <input type="email" placeholder="Correo electrónico" required>
-            <input type="date" required>
-            <input type="time" required>
-            <input type="number" placeholder="Número de personas" required>
-            <button type="submit" class="btn">Reservar</button>
-        </form>
-        </div>
-    </section>
+<!-- SECCIÓN RESERVA -->
+<section id="reservation" class="section">
+  <div class="container">
+    <h2>Reserva tu mesa</h2>
+    <p class="reservation-note">
+      Horarios de reservación:  
+      <strong>Días de semana:</strong> 12:00 PM - 2:00 PM,  
+      <strong>Domingos y festivos:</strong> 12:00 PM - 1:30 PM
+    </p>
+    <form class="reservation-form" id="reservationForm">
+      <input type="text" id="name" placeholder="Nombre" required>
+      <input type="tel" id="phone" placeholder="Número de contacto" required pattern="[0-9]{10,15}">
+      <input type="date" id="date" required>
+      <input type="time" id="time" required>
+      <input type="number" id="people" placeholder="Número de personas" min="1" required>
+      <button type="submit" class="btn">Reservar</button>
+    </form>
+  </div>
+</section>
+
+
+
 
     <!-- SECCIÓN CONTACTO -->
     <section id="contact" class="section bg-light">

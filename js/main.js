@@ -226,3 +226,51 @@ if (document.readyState === 'loading') {
 } else {
   initCarousel();
 }
+//////////////////////////////////////////////////////////////////////////////////////
+// reservacion
+const dateInput = document.getElementById("date");
+const timeInput = document.getElementById("time");
+const form = document.getElementById("reservationForm");
+
+// Cambia rango de horas según el día
+dateInput.addEventListener("change", () => {
+  const day = new Date(dateInput.value).getDay(); // 0 = domingo
+  if (day === 0) {
+    // Domingo
+    timeInput.min = "12:00";
+    timeInput.max = "13:30";
+  } else if (day >= 2 && day <= 6) {
+    // Martes - Sábado (lunes cerrado)
+    timeInput.min = "12:00";
+    timeInput.max = "14:00";
+  } else {
+    // Lunes cerrado
+    timeInput.value = "";
+    timeInput.min = "";
+    timeInput.max = "";
+    alert("Lo sentimos, el restaurante está cerrado los lunes.");
+  }
+  timeInput.value = ""; // reinicia selección al cambiar fecha
+});
+
+// Enviar la info a WhatsApp
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const date = dateInput.value;
+  const time = timeInput.value;
+  const people = document.getElementById("people").value;
+
+  const message = `📅 Reserva de mesa:
+👤 Nombre: ${name}
+📞 Contacto: ${phone}
+📌 Fecha: ${date}
+⏰ Hora: ${time}
+👥 Personas: ${people}`;
+
+  const restaurantPhone = "573001112233"; // <-- número del restaurante
+  const url = `https://wa.me/${restaurantPhone}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+});
