@@ -53,7 +53,7 @@
 
     .nav-menu li a:hover,
     .nav-menu li a.active {
-    color: #000;
+    color: #e17034;
     }
 
     /* Botón menú hamburguesa */
@@ -511,12 +511,140 @@ Sección Sobre Nosotros
     margin: 10px 0;
     color: #333;
 }
-
+/* ////////////////////////////////////////////////////////////////////////////// */
 /* Footer */
-#footer {
+/* #footer {
     background: #000;
     color: #ccc;
     text-align: center;
     padding: 20px;
+} */
+
+#footer {
+  background: rgba(0, 0, 0, 0.85); /* fondo oscuro con transparencia */
+  color: #fff;
+  padding: 40px 20px 20px;
+  font-family: 'Arial', sans-serif;
 }
 
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-logo img {
+  max-width: 150px;
+  border-radius: 50%;
+}
+
+#footer h3 {
+  color: #ff6600; /* naranja */
+  margin-bottom: 10px;
+  font-family: 'Georgia', serif;
+}
+
+#footer p, 
+#footer span, 
+#footer a {
+  color: #ccc;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  color: #ff6600;
+}
+
+/* 🔹 Social links en fila (si quieres usarlo en otro lugar) */
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-links a {
+  color: #fff;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #ff6600;
+}
+
+/* 🔹 Social links en columna (para el footer "Sobre Nosotros") */
+.social-links.column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.social-links.column li {
+  display: flex;
+  align-items: center;
+}
+
+.social-links.column a {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre ícono y texto */
+  color: #fff;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.social-links.column a:hover {
+  color: #ff6600;
+}
+
+/* Íconos tamaño "logito" */
+.social-links.column i {
+  font-size: 18px;
+  width: 22px; /* mismo ancho para alinear */
+  text-align: center;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+  color: #ff6600;
+}
+
+/* --- Responsive --- */
+@media (max-width: 992px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  /* en móvil, centrar también las redes */
+  .social-links.column {
+    align-items: center;
+  }
+
+  .footer-logo {
+    margin-bottom: 20px;
+  }
+}
