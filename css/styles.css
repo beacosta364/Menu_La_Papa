@@ -326,6 +326,72 @@ Sección Sobre Nosotros
 
 
 /* /////////////////////////////////////////////////////////////// */
+/* Contenedor general */
+.carousel-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  margin-top: 20px;
+}
+
+/* Pista de movimiento */
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  will-change: transform;
+}
+
+/* Cada tarjeta */
+.card {
+  flex: 0 0 calc(100% / 3 - 20px); /* desktop: 3 visibles */
+  flex-shrink: 0;
+  max-width: calc(100% / 3 - 20px);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Imagen */
+.card img {
+  width: 100%;
+  height: 300px; /* aumenta altura aquí */
+  object-fit: cover; /* mantiene proporción */
+  border-radius: 10px;
+}
+
+/* Título */
+.card h3 {
+  margin: 10px;
+  font-size: 1.2rem;
+  color: #ff5a00;
+}
+
+/* Descripción oculta */
+.card .description {
+  display: none;
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Cuando está activa */
+.card.active .description {
+  display: block;
+}
+
+/* Responsive: solo 1 card visible */
+@media (max-width: 768px) {
+  .card {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .carousel-track {
+    gap: 10px;
+  }
+}
+
+/* ///////////////////////////////////////////////////////////////////////////////// */
 
 /* Menú */
 .bg-light {
