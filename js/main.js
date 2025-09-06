@@ -77,3 +77,152 @@ function typeEffect() {
 // Iniciar efecto
 document.addEventListener("DOMContentLoaded", typeEffect);
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+// ---- Carrusel auto + drag + click para descripción ----
+const container = document.querySelector('.carousel-container');
+const track = document.querySelector('.carousel-track');
+let cards = Array.from(track.querySelectorAll('.card'));
+
+let index = 0;
+let autoScrollTimer = null;
+let slideDistance = 0;   // px a desplazar por cada índice
+let visibleCount = 3;    // cuantas tarjetas se ven a la vez
+let maxIndex = Math.max(0, cards.length - visibleCount);
+const AUTO_INTERVAL = 3000; // ms
+
+// Calcula tamaños y variables dependientes del layout
+function updateSizes() {
+  cards = Array.from(track.querySelectorAll('.card'));
+  if (cards.length === 0) return;
+
+  const cardRect = cards[0].getBoundingClientRect();
+  const cardWidth = cardRect.width;
+
+  const style = window.getComputedStyle(track);
+  const gap = parseFloat(style.gap || style.columnGap || '0') || 0;
+
+  slideDistance = Math.round(cardWidth + gap);
+  visibleCount = Math.max(1, Math.floor(container.clientWidth / slideDistance));
+  maxIndex = Math.max(0, cards.length - visibleCount);
+
+  if (index > maxIndex) index = 0;
+  goToIndex(index, false);
+}
+
+// Mover a un índice (con/sin animación)
+function goToIndex(i, animate = true) {
+  index = Math.max(0, Math.min(i, maxIndex));
+  track.style.transition = animate ? 'transform 0.5s ease' : 'none';
+  const x = -(index * slideDistance);
+  track.style.transform = `translateX(${x}px)`;
+}
+
+// Función next (ciclo)
+function moveNext() {
+  if (index >= maxIndex) {
+    index = 0;
+  } else {
+    index++;
+  }
+  goToIndex(index, true);
+}
+
+// Auto-scroll
+function startAutoScroll() {
+  stopAutoScroll();
+  autoScrollTimer = setInterval(moveNext, AUTO_INTERVAL);
+}
+function stopAutoScroll() {
+  if (autoScrollTimer) clearInterval(autoScrollTimer);
+  autoScrollTimer = null;
+}
+
+// Drag / Swipe (mouse + touch)
+let isDragging = false;
+let startX = 0;
+
+function pointerDown(e) {
+  stopAutoScroll();
+  isDragging = true;
+  startX = (e.touches ? e.touches[0].clientX : e.clientX);
+  track.style.transition = 'none';
+}
+function pointerMove(e) {
+  if (!isDragging) return;
+  const currentX = (e.touches ? e.touches[0].clientX : e.clientX);
+  const dx = currentX - startX;
+  const baseX = -index * slideDistance;
+  track.style.transform = `translateX(${baseX + dx}px)`;
+}
+function pointerUp(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  const endX = (e.changedTouches ? e.changedTouches[0].clientX : e.clientX);
+  const dx = endX - startX;
+
+  if (dx > 50 && index > 0) {
+    goToIndex(index - 1, true);
+  } else if (dx < -50 && index < maxIndex) {
+    goToIndex(index + 1, true);
+  } else {
+    goToIndex(index, true);
+  }
+
+  startAutoScroll();
+}
+
+// Click en tarjeta → activar descripción (y desactivar otras)
+function setupCardClicks() {
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (isDragging) return;
+
+      const already = card.classList.contains('active');
+      cards.forEach(c => c.classList.remove('active'));
+
+      if (!already) {
+        card.classList.add('active');
+        stopAutoScroll();   // 🚨 detener carrusel si hay card activa
+      } else {
+        startAutoScroll();  // 🚨 reanudar carrusel si se desactiva
+      }
+    });
+  });
+
+  // click fuera de cualquier tarjeta → cerrar y reanudar
+  document.addEventListener('click', (e) => {
+    if (!track.contains(e.target)) {
+      let hadActive = cards.some(c => c.classList.contains('active'));
+      cards.forEach(c => c.classList.remove('active'));
+      if (hadActive) {
+        startAutoScroll();  // 🚨 reanudar cuando se cierre
+      }
+    }
+  });
+}
+
+// Inicialización
+function initCarousel() {
+  track.addEventListener('mousedown', pointerDown);
+  track.addEventListener('touchstart', pointerDown, {passive:true});
+
+  window.addEventListener('mousemove', pointerMove);
+  window.addEventListener('touchmove', pointerMove, {passive:true});
+
+  window.addEventListener('mouseup', pointerUp);
+  window.addEventListener('touchend', pointerUp);
+
+  window.addEventListener('resize', updateSizes);
+  window.addEventListener('orientationchange', updateSizes);
+  window.addEventListener('load', updateSizes);
+
+  setupCardClicks();
+  updateSizes();
+  startAutoScroll();
+}
+
+// Ejecutar (DOM ready)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCarousel);
+} else {
+  initCarousel();
+}
