@@ -302,3 +302,26 @@ lightbox.addEventListener('click', (e) => {
         lightbox.style.display = 'none';
     }
 });
+////////////////////////////////////////////////////////////////////
+ // Tabs interactivas
+    const tabs = document.querySelectorAll(".menu-tab");
+    const sections = document.querySelectorAll(".menu-section");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        // Cambiar estado activo en tabs
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        // Mostrar solo la sección correspondiente
+        const target = tab.dataset.target;
+        sections.forEach(sec => {
+          if (sec.id === target) {
+            sec.classList.add("active");
+          } else {
+            sec.classList.remove("active");
+          }
+        });
+      });
+    });
+ 
