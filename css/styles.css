@@ -648,3 +648,84 @@ Sección Sobre Nosotros
     margin-bottom: 20px;
   }
 }
+/* //////////////////////////////////////////////////////////////////////////// */
+/* GALERÍA *//* GALERÍA */
+.gallery-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    
+    /* Centramos y limitamos el ancho */
+    max-width: 1200px;  /* máximo ancho de la galería */
+    margin: 0 auto;     /* centrado horizontal */
+    box-sizing: border-box;
+}
+
+.gallery-items img {
+    width: 100%;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.gallery-items img:hover {
+    transform: scale(1.05);
+}
+
+/* LIGHTBOX */
+.lightbox {
+    display: none; 
+    position: fixed; 
+    z-index: 999; 
+    padding-top: 60px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.9); 
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 8px;
+}
+
+#caption {
+    margin: 15px auto;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+}
+
+.close {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close:hover {
+    color: #bbb;
+}
+
+/* AJUSTES PARA PANTALLAS GRANDES */
+@media (min-width: 1400px) {
+    .gallery-items {
+        grid-template-columns: repeat(5, 1fr); /* máximo 5 columnas */
+    }
+}
+
+@media (min-width: 1700px) {
+    .gallery-items {
+        grid-template-columns: repeat(6, 1fr); /* máximo 6 columnas */
+    }
+}

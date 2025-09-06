@@ -274,3 +274,31 @@ form.addEventListener("submit", function(e) {
   const url = `https://wa.me/${restaurantPhone}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 });
+//////////////////////////////////////////////////////////////////////////////////////////
+// Seleccionamos todos los elementos de la galería
+const galleryImages = document.querySelectorAll('.gallery-items img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const captionText = document.getElementById('caption');
+const closeBtn = document.querySelector('.close');
+
+// Abrir lightbox al hacer clic
+galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+        lightbox.style.display = 'block';
+        lightboxImg.src = img.src;
+        captionText.textContent = img.alt;
+    });
+});
+
+// Cerrar lightbox
+closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});
+
+// También cerrar si el usuario hace clic fuera de la imagen
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+    }
+});
