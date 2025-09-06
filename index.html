@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Papa - Restaurante</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- HEADER / MENÚ -->
+    <header id="site-header">
+        <nav id="main-nav">
+        <div class="logo">
+            <a href="#inicio">
+            <img src="homeimg/LogoLaPapa.png" alt="Logo La Papa">
+            </a>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        <ul class="nav-menu" id="nav-menu">
+            <li><a href="#inicio" class="active">Inicio</a></li>
+            <li><a href="#about">Sobre nosotros</a></li>
+            <li><a href="#menu">Menú</a></li>
+            <li><a href="#reservation">Reserva</a></li>
+            <li><a href="#contact">Contáctanos</a></li>
+        </ul>
+        </nav>
+    </header>
+
+    <!-- SECCIÓN INICIO -->
+<section id="inicio" class="hero">
+    <!-- Imagen de fondo -->
+    <img src="homeimg/banner.jpg" alt="Banner Restaurante" class="hero-bg">
+
+    <div class="hero-content">
+        <h1>Ofreciendo el Mejor <span id="changing-text"></span></h1>
+        <h2>44 Años en Cali</h2>
+        <p>Date el gusto de conocernos</p>
+        <a href="#reservation" class="btn">Reservar mi mesa</a>
+    </div>
+</section>
+
+    <!-- SECCIÓN SOBRE NOSOTROS -->
+<section id="about" class="about section bg-light">
+  <div class="about-content">
+    <h2>Sobre nosotros</h2>
+        <h3>Bienvenidos a LA PAPA</h3>
+        <p>
+            El 1 de diciembre del año 1980 abrimos nuestro restaurante en la ciudad de Cali, 
+            La Estacion De La papa. <br>
+            El nombre fue escogido como tributo al alimento más noble de la cocina universal.
+            <br>
+            La magia de nuestras cocineras, la calidad de nuestros ingredientes, 
+            y el amable servicio de nuestro personal son los valores que hacen de nuestro 
+            restaurante "La Papa", algo inolvidable. 
+            <br>
+            Siéntase cómodo, tómese una copa de vino y disfrute de nuestra gastronomía.
+            <br>
+            Estaremos siempre comprometidos a hacer Lo que sea por el sabor.
+        </p>
+
+        <h3>ADVERTENCIA PROPINA:</h3>
+        <p>
+            Se informa a los consumidores que este establecimiento de comercio sugiere a sus 
+            consumidores una propina correspondiente al 10% del valor de la cuenta, el cual 
+            podrá ser aceptado, rechazado o modificado por usted, de acuerdo con su valoración 
+            del servicio prestado. Al momento de solicitar la cuenta, indíquele a la persona que 
+            lo atiende si quiere que dicho valor sea o no incluido en la factura o indíquele el 
+            valor que quiere dar como propina.
+            <br>
+            En este establecimiento de comercio los dineros recogidos por concepto de propina se 
+            reparten al 100% entre los trabajadores del área de servicios.
+            <br>
+            En caso de que tenga algún inconveniente con el cobro de la propina, comuníquese con 
+            la Línea exclusiva dispuesta en Bogotá para atender las inquietudes sobre el tema: 6513240, 
+            o a la Línea de Atención al Ciudadano de la Superintendencia de Industria y Comercio: 5920400, 
+            en Bogotá o para el resto del país Línea Gratuita Nacional: 018000-910165, para que radique su queja.
+        </p>
+
+        <h3>ADVERTENCIA INC:</h3>
+        <p>
+            TODOS NUESTROS PRECIOS INCLUYEN EL 8% DEL INC
+        </p>
+  </div>
+
+  <!-- Columna de imágenes -->
+  <div class="about-image">
+    <img src="homeimg/Pincho res...jpg" alt="Sobre Nosotros">
+  </div>
+</section>
+
+
+
+
+
+    <!-- SECCIÓN MENÚ -->
+    <section id="menu" class="section bg-light">
+        <div class="container">
+        <h2>Menú</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+            <img src="homeimg/plato1.jpg" alt="Plato 1">
+            <h3>Papa rellena</h3>
+            <p>Rellena de carne y condimentos caseros.</p>
+            </div>
+            <div class="menu-item">
+            <img src="homeimg/plato2.jpg" alt="Plato 2">
+            <h3>Arepa de choclo</h3>
+            <p>Dorada, con queso fresco derretido.</p>
+            </div>
+            <div class="menu-item">
+            <img src="homeimg/plato3.jpg" alt="Plato 3">
+            <h3>Empanadas</h3>
+            <p>Crocantes, rellenas de carne o pollo.</p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN RESERVA -->
+    <section id="reservation" class="section">
+        <div class="container">
+        <h2>Reserva tu mesa</h2>
+        <form class="reservation-form">
+            <input type="text" placeholder="Nombre" required>
+            <input type="email" placeholder="Correo electrónico" required>
+            <input type="date" required>
+            <input type="time" required>
+            <input type="number" placeholder="Número de personas" required>
+            <button type="submit" class="btn">Reservar</button>
+        </form>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO -->
+    <section id="contact" class="section bg-light">
+        <div class="container">
+        <h2>Contáctanos</h2>
+        <p>📍 Dirección: Calle Ficticia #123 - Ciudad</p>
+        <p>📞 Teléfono: +57 300 123 4567</p>
+        <p>✉️ Correo: contacto@lapapa.com</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <p>&copy; 2025 La Papa. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
