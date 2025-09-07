@@ -964,3 +964,86 @@ Sección Sobre Nosotros
         grid-template-columns: repeat(6, 1fr); /* máximo 6 columnas */
     }
 }
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////// */
+/* Estilos sección testimonios */
+/* #testimonials {
+  background: #f9f9f9;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.testimonials-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.testimonial-item {
+  max-width: 600px; 
+  width: 100%;
+  background: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.testimonial-item video {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+} */
+
+/* Sección testimonios */
+#testimonials {
+  background: #f9f9f9;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.testimonials-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor del testimonio */
+.testimonial-item {
+  width: 100%;
+  max-width: 600px; 
+  background: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+/* Video responsivo */
+.testimonial-item video {
+  width: 100%;
+  max-width: 370px;   /* ancho máximo en desktop */
+  aspect-ratio: 9 / 14; /* vertical, como el teléfono */
+  border-radius: 10px;
+  object-fit: contain; /* muestra todo el video sin recortar */
+}
+
+
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #testimonials h2 {
+    font-size: 1.8em;
+  }
+
+  .testimonial-item {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  .testimonial-item video {
+    max-width: 300px;   /* un tamaño medio */
+    aspect-ratio: 9 / 16;
+  }
+}
