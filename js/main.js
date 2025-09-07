@@ -226,3 +226,102 @@ if (document.readyState === 'loading') {
 } else {
   initCarousel();
 }
+//////////////////////////////////////////////////////////////////////////////////////
+// reservacion
+const dateInput = document.getElementById("date");
+const timeInput = document.getElementById("time");
+const form = document.getElementById("reservationForm");
+
+// Cambia rango de horas según el día
+dateInput.addEventListener("change", () => {
+  const day = new Date(dateInput.value).getDay(); // 0 = domingo
+  if (day === 0) {
+    // Domingo
+    timeInput.min = "12:00";
+    timeInput.max = "13:30";
+  } else if (day >= 2 && day <= 6) {
+    // Martes - Sábado (lunes cerrado)
+    timeInput.min = "12:00";
+    timeInput.max = "14:00";
+  } else {
+    // Lunes cerrado
+    timeInput.value = "";
+    timeInput.min = "";
+    timeInput.max = "";
+    alert("Lo sentimos, el restaurante está cerrado los lunes.");
+  }
+  timeInput.value = ""; // reinicia selección al cambiar fecha
+});
+
+// Enviar la info a WhatsApp
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const date = dateInput.value;
+  const time = timeInput.value;
+  const people = document.getElementById("people").value;
+
+  const message = `📅 Reserva de mesa:
+👤 Nombre: ${name}
+📞 Contacto: ${phone}
+📌 Fecha: ${date}
+⏰ Hora: ${time}
+👥 Personas: ${people}`;
+
+  const restaurantPhone = "573001112233"; // <-- número del restaurante
+  const url = `https://wa.me/${restaurantPhone}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+});
+//////////////////////////////////////////////////////////////////////////////////////////
+// Seleccionamos todos los elementos de la galería
+const galleryImages = document.querySelectorAll('.gallery-items img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const captionText = document.getElementById('caption');
+const closeBtn = document.querySelector('.close');
+
+// Abrir lightbox al hacer clic
+galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+        lightbox.style.display = 'block';
+        lightboxImg.src = img.src;
+        captionText.textContent = img.alt;
+    });
+});
+
+// Cerrar lightbox
+closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});
+
+// También cerrar si el usuario hace clic fuera de la imagen
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+    }
+});
+////////////////////////////////////////////////////////////////////
+ // Tabs interactivas
+    const tabs = document.querySelectorAll(".menu-tab");
+    const sections = document.querySelectorAll(".menu-section");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        // Cambiar estado activo en tabs
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        // Mostrar solo la sección correspondiente
+        const target = tab.dataset.target;
+        sections.forEach(sec => {
+          if (sec.id === target) {
+            sec.classList.add("active");
+          } else {
+            sec.classList.remove("active");
+          }
+        });
+      });
+    });
+ 
