@@ -270,7 +270,7 @@ form.addEventListener("submit", function(e) {
 ⏰ Hora: ${time}
 👥 Personas: ${people}`;
 
-  const restaurantPhone = "573001112233"; // <-- número del restaurante
+  const restaurantPhone = "573168468130"; // <-- número del restaurante
   const url = `https://wa.me/${restaurantPhone}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 });
